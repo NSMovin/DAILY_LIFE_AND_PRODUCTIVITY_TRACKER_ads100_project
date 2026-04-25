@@ -1,6 +1,5 @@
-# ─────────────────────────────────────────
-#              DATA STORAGE
-# ─────────────────────────────────────────
+
+#DATA STORAGE
 
 tasks = []
 expenses = []
@@ -8,9 +7,7 @@ incomes = []
 goals = []
 
 
-# ─────────────────────────────────────────
-#            HELPER FUNCTIONS
-# ─────────────────────────────────────────
+#HELPER FUNCTIONS
 
 def divider():
     print("─" * 45)
@@ -20,13 +17,30 @@ def header(title):
     print("   " + title)
     print("=" * 45)
 
+def get_int(prompt):
+    while True:
+        try:
+            return int(input(prompt))
+        except ValueError:
+            print("Invalid input. Enter an integer.")
 
-# ─────────────────────────────────────────
-#            TASK MANAGER
-# ─────────────────────────────────────────
+
+def get_float(prompt):
+    while True:
+        try:
+            return float(input(prompt))
+        except ValueError:
+            print("Invalid input. Enter a number.")
+
+
+#TASK MANAGER
+
 
 def add_task():
-    task_name = input("Enter task: ")
+    task_name = input("Enter task: ").strip()
+    if task_name == "":
+        print("Task cannot be empty.")
+        return
     tasks.append({"task": task_name, "done": False})
     print("Task added successfully!")
 
@@ -75,7 +89,7 @@ def complete_task():
     for i in range(len(pending)):
         print("  " + str(i+1) + ". " + pending[i]["task"])
 
-    choice = int(input("Enter task number to mark complete: "))
+    choice = get_int("Enter task number to mark complete: ")
     if choice >= 1 and choice <= len(pending):
         pending[choice - 1]["done"] = True
         print("'" + pending[choice - 1]["task"] + "' marked as complete!")
@@ -95,7 +109,7 @@ def delete_task():
             status = "Pending"
         print("  " + str(i+1) + ". " + tasks[i]["task"] + " [" + status + "]")
 
-    choice = int(input("Enter task number to delete: "))
+    choice = get_int("Enter task number to delete: ")
     if choice >= 1 and choice <= len(tasks):
         removed = tasks[choice - 1]
         tasks.pop(choice - 1)
@@ -133,14 +147,22 @@ def task_menu():
 # ─────────────────────────────────────────
 
 def add_income():
-    amount = float(input("Enter income amount (BDT): "))
+    amount = input("Enter income amount (BDT): ")
+    if amount.replace(".", "", 1).isdigit() == False: 
+        print("Invalid input. Enter a number.")
+        return
+    amount = float(amount)  
     source = input("Source (e.g. Allowance, Freelance): ")
     incomes.append({"amount": amount, "source": source})
     print("Income of " + str(amount) + " BDT added!")
 
 
 def add_expense():
-    amount = float(input("Enter expense amount (BDT): "))
+    amount = input("Enter expense amount (BDT): ")
+    if amount.replace(".", "", 1).isdigit() == False:
+        print("Invalid input. Enter a number.")
+        return
+    amount = float(amount)
     print("Categories:")
     print("  1. Food  2. Transport  3. Study  4. Entertainment  5. Other")
     cat = input("Choose category (1-5): ")
@@ -247,11 +269,10 @@ def expense_menu():
 
 def add_goal():
     name = input("Enter goal (e.g. Save 5000 BDT, Read 10 books): ")
-    target = float(input("Enter target number (e.g. 5000 or 10): "))
+    target = get_float("Enter target number (e.g. 5000 or 10): ")
     unit = input("Unit (e.g. BDT, books, km, hours): ")
     goals.append({"name": name, "target": target, "progress": 0, "unit": unit, "done": False})
     print("Goal '" + name + "' added! Target: " + str(target) + " " + unit)
-
 
 def update_goal():
     active = []
@@ -268,9 +289,19 @@ def update_goal():
         percent = (active[i]["progress"] / active[i]["target"]) * 100
         print("  " + str(i+1) + ". " + active[i]["name"] + " - " + str(active[i]["progress"]) + "/" + str(active[i]["target"]) + " " + active[i]["unit"] + " (" + str(round(percent, 1)) + "%)")
 
-    choice = int(input("Enter goal number to update: "))
+    choice_input = input("Enter goal number to update: ")
+    if choice_input.isdigit() == False:
+        print("Invalid input. Please enter a number.")
+        return
+
+    choice = int(choice_input)
     if choice >= 1 and choice <= len(active):
-        amount = float(input("Enter progress to add: "))
+        amount_input = input("Enter progress to add: ")
+        if amount_input.replace(".", "", 1).isdigit() == False:
+            print("Invalid amount. Please enter a number.")
+            return
+
+        amount = float(amount_input)
         active[choice - 1]["progress"] = active[choice - 1]["progress"] + amount
         g = active[choice - 1]
         percent = (g["progress"] / g["target"]) * 100
@@ -282,6 +313,7 @@ def update_goal():
             print("GOAL '" + g["name"] + "' COMPLETED!")
     else:
         print("Invalid number.")
+
 
 
 def view_goals():
@@ -303,9 +335,12 @@ def view_goals():
         print("  No active goals.")
     else:
         for g in active:
-            percent = (g["progress"] / g["target"]) * 100
-            if percent > 100:
-                percent = 100
+            if g["target"] == 0:
+                percent = 0
+            
+            else:
+                percent = (g["progress"] / g["target"]) * 100
+            
             filled = int(percent / 10)
             bar = "█" * filled + "░" * (10 - filled)
             print("  " + g["name"])
