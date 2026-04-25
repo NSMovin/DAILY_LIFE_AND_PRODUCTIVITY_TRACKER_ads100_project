@@ -147,3 +147,9 @@ A student can use the app to:
 ## Conclusion
 
 The Daily Life and Productivity Tracker is a practical Python project that applies programming fundamentals to everyday organization. It demonstrates how simple data structures, functions, loops, and conditions can be combined to build a useful console-based productivity tool.
+
+## Contributors
+
+- Naeem Shovon Shuvro - ID: 261035005
+- Shovan Chowdhury - ID: 261035044
+- Mahbubul Alam Masum - ID: 261035004
