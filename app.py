@@ -268,8 +268,14 @@ def expense_menu():
 # ─────────────────────────────────────────
 
 def add_goal():
-    name = input("Enter goal (e.g. Save 5000 BDT, Read 10 books): ")
+    name = input("Enter goal (e.g. Save 5000 BDT, Read 10 books): ").strip()
+    if name == "":
+        print("Goal cannot be empty.")
+        return
     target = get_float("Enter target number (e.g. 5000 or 10): ")
+    if target == 0:
+        print("Target cannot be zero.")
+        return
     unit = input("Unit (e.g. BDT, books, km, hours): ")
     goals.append({"name": name, "target": target, "progress": 0, "unit": unit, "done": False})
     print("Goal '" + name + "' added! Target: " + str(target) + " " + unit)
