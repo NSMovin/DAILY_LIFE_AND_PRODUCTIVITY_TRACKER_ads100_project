@@ -142,9 +142,9 @@ def task_menu():
             print("Invalid choice.")
 
 
-# ─────────────────────────────────────────
-#        EXPENSE & SAVINGS TRACKER
-# ─────────────────────────────────────────
+
+#EXPENSE & SAVINGS TRACKER
+
 
 def add_income():
     amount = input("Enter income amount (BDT): ")
@@ -263,9 +263,8 @@ def expense_menu():
             print("Invalid choice.")
 
 
-# ─────────────────────────────────────────
-#              GOAL TRACKER
-# ─────────────────────────────────────────
+
+#GOAL TRACKER
 
 def add_goal():
     name = input("Enter goal (e.g. Save 5000 BDT, Read 10 books): ").strip()
@@ -382,9 +381,8 @@ def goal_menu():
             print("Invalid choice.")
 
 
-# ─────────────────────────────────────────
-#            DAILY SUMMARY
-# ─────────────────────────────────────────
+#DAILY SUMMARY
+
 
 def daily_summary():
     header("YOUR DAILY SUMMARY")
@@ -467,9 +465,8 @@ def daily_summary():
         print("  Room to grow. You got this!")
 
 
-# ─────────────────────────────────────────
-#               MAIN MENU
-# ─────────────────────────────────────────
+#MAIN MENU
+
 
 def main():
     print("\n" + "=" * 45)
